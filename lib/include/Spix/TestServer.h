@@ -42,7 +42,7 @@ public:
     void start();
     void setCommandExecuter(CommandExecuter* exec);
 
-    void setGenericCommandHandler(std::function<void(std::string, std::string)> handler);
+    void setGenericCommandHandler(std::function<void(std::string, std::string, std::vector<Variant> args)> handler);
 
     // Commands
     void wait(std::chrono::milliseconds waitTime);
@@ -53,7 +53,7 @@ public:
     void mouseBeginDrag(ItemPath path);
     void mouseEndDrag(ItemPath path);
     void mouseDropUrls(ItemPath path, const std::vector<std::string>& urls);
-    void genericCommand(std::string command, std::string payload);
+    void genericCommand(std::string command, std::string payload, std::vector<Variant> args);
 
     void inputText(ItemPath path, std::string text);
     void enterKey(ItemPath path, int keyCode, unsigned modifiers);
@@ -75,7 +75,7 @@ protected:
 private:
     CommandExecuter* m_cmdExec;
     std::thread m_thread;
-    std::function<void(std::string, std::string)> m_handler;
+    std::function<void(std::string, std::string, std::vector<Variant> args)> m_handler;
 };
 
 } // namespace spix

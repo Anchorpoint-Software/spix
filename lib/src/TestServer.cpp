@@ -51,7 +51,7 @@ void TestServer::setCommandExecuter(CommandExecuter* exec)
     m_cmdExec = exec;
 }
 
-void TestServer::setGenericCommandHandler(std::function<void(std::string, std::string)> handler)
+void TestServer::setGenericCommandHandler(std::function<void(std::string, std::string, std::vector<Variant> args)> handler)
 {
     m_handler = handler;
 }
@@ -102,10 +102,10 @@ void TestServer::mouseDropUrls(ItemPath path, const std::vector<std::string>& ur
     m_cmdExec->enqueueCommand<cmd::DropFromExt>(path, makePasteboardContentWithUrls(urls));
 }
 
-void TestServer::genericCommand(std::string command, std::string payload)
+void TestServer::genericCommand(std::string command, std::string payload, std::vector<Variant> args)
 {
     m_cmdExec->enqueueCommand<cmd::CustomCmd>(
-        [=](spix::CommandEnvironment&) { m_handler(command, payload); }, []() { return true; });
+        [=](spix::CommandEnvironment&) { m_handler(command, payload, args); }, []() { return true; });
 }
 
 void TestServer::inputText(ItemPath path, std::string text)

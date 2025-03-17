@@ -123,9 +123,9 @@ AnyRpcServer::AnyRpcServer(int anyrpcPort)
 
     utils::AddFunctionToAnyRpc<void()>(methodManager, "quit", "Close the app | quit()", [this] { quit(); });
 
-    utils::AddFunctionToAnyRpc<void(std::string, std::string)>(methodManager, "command",
-        "Executes a generic/custom command | command(string command, string payload)",
-        [this](std::string command, std::string payload) { genericCommand(command, payload); });
+    utils::AddFunctionToAnyRpc<void(std::string, std::string, std::vector<Variant>)>(methodManager, "command",
+        "Executes a generic/custom command | command(string command, string payload, any[] args)",
+        [this](std::string command, std::string payload, std::vector<Variant> args) { genericCommand(command, payload, args); });
 
     m_pimpl->server->BindAndListen(anyrpcPort);
 }
